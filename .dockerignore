@@ -2,3 +2,4 @@ dis/
 node_modules/
 .env
 .vscode/
+postgres/

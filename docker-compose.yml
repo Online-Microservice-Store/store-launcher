@@ -17,59 +17,82 @@ services:
       - PORT=3000
       - NATS_SERVERS=nats://nats-server:4222
 
-  products-ms:
-    build: ./product-microservice
+  productss-ms:
+    build: ./productss-microservice
     volumes:
-      - ./product-microservice/src:/usr/src/app/src
+      - ./productss-microservice/src:/usr/src/app/src
     command: npm run start:dev
     environment:
-      - PORT=3001
+      - PORT=3010
       - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=file:./dev.db
-
-  orders-ms:
-    build: ./orders-microservice
-    volumes:
-      - ./orders-microservice/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - PORT=3002
-      - DATABASE_URL=${DATABASE_URL_POSTGRES}
-      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${DATABASE_URL_PRODUCTSS}
     depends_on:
-      orders-db:
-        condition: service_healthy    
-  orders-db:
-    container_name: orderdb
+      products-db:
+        condition: service_healthy 
+
+  products-db:
+    container_name: products_db
     image: postgres:16.2
     restart: always
     volumes:
-      - ./orders-microservice/postgres:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=ketchup1234
-      - POSTGRES_DB=orderdb
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=products-db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
-      timeout: 3s
+      timeout: 15s
       retries: 10
-  payment-ms:
-    build: ./payments-microservice
-    ports:
-      - ${PAYMENT_MS_PORT}:${PAYMENT_MS_PORT}
-    volumes:
-      - ./payments-microservice/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - PORT=${PAYMENT_MS_PORT}
-      - STRIPE_SECRET=${STRIPE_SECRET}
-      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL}
-      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL}
-      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
-      - NATS_SERVERS=nats://nats-server:4222
+
+  # orders-ms:
+  #   build: ./orders-microservice
+  #   volumes:
+  #     - ./orders-microservice/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - PORT=3002
+  #     - DATABASE_URL=${DATABASE_URL_POSTGRES}
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #   depends_on:
+  #     orders-db:
+  #       condition: service_healthy  
+
+  # orders-db:
+  #   container_name: orderdb
+  #   image: postgres:16.2
+  #   restart: always
+  #   volumes:
+  #     - ./orders-microservice/postgres:/var/lib/postgresql/data
+  #   ports:
+  #     - 5431:5431
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=ketchup1234
+  #     - POSTGRES_DB=orderdb
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 3s
+  #     retries: 10
+
+  # payment-ms:
+  #   build: ./payments-microservice
+  #   ports:
+  #     - ${PAYMENT_MS_PORT}:${PAYMENT_MS_PORT}
+  #   volumes:
+  #     - ./payments-microservice/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - PORT=${PAYMENT_MS_PORT}
+  #     - STRIPE_SECRET=${STRIPE_SECRET}
+  #     - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL}
+  #     - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL}
+  #     - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
+  #     - NATS_SERVERS=nats://nats-server:4222
   
   # auth-ms:
   #   build: ./auth-microservice
