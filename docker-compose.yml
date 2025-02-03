@@ -19,7 +19,7 @@ services:
 
 
 #======================================================
-# SUSCRIPTIONS LOCAL
+# NOTIFICATIONS LOCAL
 #=======================================================
   # notifications-ms:
   #   build: ./notifications-microservice
@@ -178,18 +178,21 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${AUTH_DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
+
+
+      
 #======================================================
 # FRONT-END
 #=======================================================
-  # front-end:
-  #   build: 
-  #     context: ./front-end/app
-  #     dockerfile: dockerfile
-  #   volumes:
-  #     - ./front-end/app/src:/usr/src/app/src
-  #   ports:
-  #     - 4000:4000
-  #   command: npm run dev
-  #   environment:
-  #     - PORT=4000
-  #     - BACKEND_URL=${BACKEND_URL_TO_FRONT_END}
+  front-end:
+    build: 
+     context: ./front-end/app
+     dockerfile: dockerfile
+    volumes:
+      - ./front-end/app/src:/usr/src/app/src
+    ports:
+      - 4000:4000
+    command: npm run dev
+    environment:
+      - PORT=4000
+      - BACKEND_URL=${BACKEND_URL_TO_FRONT_END}
