@@ -22,3 +22,6 @@
 [submodule "notifications-microservice"]
 	path = notifications-microservice
 	url = https://github.com/Online-Microservice-Store/notifications-microservice.git
+[submodule "front-end"]
+	path = front-end
+	url = https://github.com/Online-Microservice-Store/front-end.git
