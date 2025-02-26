@@ -19,3 +19,6 @@
 [submodule "stores-microservice"]
 	path = stores-microservice
 	url = https://github.com/Online-Microservice-Store/stores-microservice.git
+[submodule "notifications-microservice"]
+	path = notifications-microservice
+	url = https://github.com/Online-Microservice-Store/notifications-microservice.git
