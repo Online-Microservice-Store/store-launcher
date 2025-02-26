@@ -17,7 +17,7 @@ services:
     build: 
       context: ./auth-microservice
       dockerfile: dockerfile.prod
-    image: auth-ms-prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/auth-ms
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
@@ -28,7 +28,7 @@ services:
     build: 
       context: ./client-gateway
       dockerfile: dockerfile.prod
-    image: client-gateway-prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/client-gateway 
     ports:
       - ${CLIENT_GATEWAY_PORT}:3000
     environment:
@@ -42,7 +42,7 @@ services:
       dockerfile: dockerfile.prod
       args:
         - NOTIFICATIONS_DB_URL=${NOTIFICATIONS_DB_URL_NEON}
-    image: notifications-ms-prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/notifications-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${NOTIFICATIONS_DB_URL_NEON}
@@ -55,7 +55,7 @@ services:
       dockerfile: dockerfile.prod
       args:
         - ORDERS_DB_URL=${ORDERS_DB_URL_NEON}
-    image: orders-ms-prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/orders-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${ORDERS_DB_URL_NEON}
@@ -65,6 +65,7 @@ services:
     build: 
       context: ./payments-microservice
       dockerfile: dockerfile.prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/payment-ms
     ports:
       - ${PAYMENT_MS_PORT}:${PAYMENT_MS_PORT}
     environment:
@@ -81,7 +82,7 @@ services:
       dockerfile: dockerfile.prod
       args:
         - PRODUCTS_DB_URL=${PRODUCTS_DB_URL_NEON}
-    image: products-ms-prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${PRODUCTS_DB_URL_NEON}
@@ -93,7 +94,7 @@ services:
       dockerfile: dockerfile.prod
       args:
         - STORES_DB_URL=${STORES_DB_URL_NEON}
-    image: stores-ms-prod
+    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/stores-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${STORES_DB_URL_NEON}
@@ -103,20 +104,21 @@ services:
 # FRONT-END
 #=====================================
 
-  front-end:
-    build: 
-     context: ./front-end/app
-     dockerfile: dockerfile
-     args:
-        - BACKEND_URL_TO_FRONT_END=${BACKEND_URL_TO_FRONT_END}
-    volumes:
-      - ./front-end/app/src:/usr/src/app/src
-    ports:
-      - 4000:4000
-    command: npm run dev
-    environment:
-      - PORT=4000
-      - BACKEND_URL=${BACKEND_URL_TO_FRONT_END}
+  # front-end:
+  #   build: 
+  #    context: ./front-end/app
+  #    dockerfile: dockerfile
+  #    args:
+  #       - BACKEND_URL_TO_FRONT_END=${BACKEND_URL_TO_FRONT_END}
+  #   image: front-end-prod
+  #   volumes:
+  #     - ./front-end/app/src:/usr/src/app/src
+  #   ports:
+  #     - 4000:4000
+  #   command: npm run dev
+  #   environment:
+  #     - PORT=4000
+  #     - BACKEND_URL=${BACKEND_URL_TO_FRONT_END}
   
   
   
