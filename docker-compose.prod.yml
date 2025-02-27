@@ -30,7 +30,7 @@ services:
       dockerfile: dockerfile.prod
     image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/client-gateway 
     ports:
-      - ${CLIENT_GATEWAY_PORT}:3000
+      - 3000:3000
     environment:
       - PORT=3000
       - NATS_SERVERS=nats://nats-server:4222
