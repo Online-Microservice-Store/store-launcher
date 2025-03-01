@@ -82,6 +82,7 @@ services:
       dockerfile: dockerfile.prod
       args:
         - PRODUCTS_DB_URL=${PRODUCTS_DB_URL_NEON}
+    # image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
     image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
     environment:
       - PORT=3002

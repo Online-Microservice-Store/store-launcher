@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: products-ms
+  name: products-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: products-ms
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: products-ms
+    spec:
+      containers:
+      - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
+        name: products-ms
+        env: 
+        - name: PORT
+          value: "3002"
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        - name: DATABASE_URL
+          value: "postgresql://neondb_owner:npg_fHCUmc4yrx9d@ep-frosty-dream-a8i6cgpc-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
+        # resources: {}
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+status: {}

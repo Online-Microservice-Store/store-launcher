@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: stores-ms
+  name: stores-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stores-ms
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: stores-ms
+    spec:
+      containers:
+      - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/stores-ms
+        name: stores-ms
+        env:
+        - name: PORT
+          value: "3002"
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: stores-secret
+              key: database_url
+        # resources: {}
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+status: {}
