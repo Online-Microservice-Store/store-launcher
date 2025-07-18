@@ -1,1 +1,4 @@
-postgres/*
+/postgres
+/dist
+/node_modules
+/build
