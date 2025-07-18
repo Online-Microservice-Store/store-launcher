@@ -18,7 +18,8 @@ spec:
         app: client-gateway
     spec:
       containers:
-      - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/client-gateway
+      - image: jhairagila/client-gateway
+      # - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/client-gateway
         name: client-gateway
         env: 
         - name: PORT

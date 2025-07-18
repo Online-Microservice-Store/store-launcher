@@ -18,7 +18,7 @@ spec:
         app: payment-ms
     spec:
       containers:
-      - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/payment-ms
+      - image: jhairagila/payment-ms
         name: payment-ms
         env:
         - name: PORT

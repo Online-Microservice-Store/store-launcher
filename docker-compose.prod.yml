@@ -17,7 +17,7 @@ services:
     build: 
       context: ./auth-microservice
       dockerfile: dockerfile.prod
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/auth-ms
+    image: jhairagila/auth-ms
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
@@ -28,7 +28,7 @@ services:
     build: 
       context: ./client-gateway
       dockerfile: dockerfile.prod
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/client-gateway 
+    image: jhairagila/client-gateway 
     ports:
       - 3000:3000
     environment:
@@ -41,8 +41,8 @@ services:
       context: ./notifications-microservice
       dockerfile: dockerfile.prod
       args:
-        - NOTIFICATIONS_DB_URL=${NOTIFICATIONS_DB_URL_NEON}
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/notifications-ms
+        - NOTIFICATIONS_DB_URL_NEON=${NOTIFICATIONS_DB_URL_NEON}
+    image: jhairagila/notifications-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${NOTIFICATIONS_DB_URL_NEON}
@@ -54,8 +54,8 @@ services:
       context: ./orders-microservice
       dockerfile: dockerfile.prod
       args:
-        - ORDERS_DB_URL=${ORDERS_DB_URL_NEON}
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/orders-ms
+        - ORDERS_DB_URL_NEON=${ORDERS_DB_URL_NEON}
+    image: jhairagila/orders-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${ORDERS_DB_URL_NEON}
@@ -65,7 +65,7 @@ services:
     build: 
       context: ./payments-microservice
       dockerfile: dockerfile.prod
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/payment-ms
+    image: jhairagila/payment-ms
     ports:
       - ${PAYMENT_MS_PORT}:${PAYMENT_MS_PORT}
     environment:
@@ -81,9 +81,9 @@ services:
       context: ./productss-microservice
       dockerfile: dockerfile.prod
       args:
-        - PRODUCTS_DB_URL=${PRODUCTS_DB_URL_NEON}
+        - PRODUCTS_DB_URL_NEON=${PRODUCTS_DB_URL_NEON}
     # image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
+    image: jhairagila/products-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${PRODUCTS_DB_URL_NEON}
@@ -94,8 +94,8 @@ services:
       context: ./stores-microservice
       dockerfile: dockerfile.prod
       args:
-        - STORES_DB_URL=${STORES_DB_URL_NEON}
-    image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/stores-ms
+        - STORES_DB_URL_NEON=${STORES_DB_URL_NEON}
+    image: jhairagila/stores-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${STORES_DB_URL_NEON}

@@ -18,7 +18,7 @@ spec:
         app: orders-ms
     spec:
       containers:
-      - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/orders-ms
+      - image: jhairagila/orders-ms
         name: orders-ms
         env: 
         - name: PORT

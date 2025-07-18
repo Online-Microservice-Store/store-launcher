@@ -17,8 +17,10 @@ spec:
       labels:
         app: auth-ms
     spec:
+      imagePullSecrets:
+        - name: regcred 
       containers:
-      - image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/auth-ms
+      - image: jhairagila/auth-ms
         name: auth-ms
         env:
         - name: PORT
